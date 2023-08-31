@@ -1,0 +1,150 @@
+<meta charset="UTF-8">
+<script language = "javascript">
+    
+    document.write( "<div id= xxxxx> </div>" );
+const div_xxxxx = document.getElementById( "xxxxx" );
+
+    
+    let sound_L = new Audio();
+    let sound_R = new Audio();
+    sound_L.src = "sound/BGM1_L.mp3";
+    sound_R.src = "sound/BGM1_R.mp3";
+    
+        const fps = 50;
+        const fps2 = 1000/fps;
+
+    
+    setTimeout(()=>{
+const id = setInterval("move()", fps2 );    
+},500)
+
+    
+    let r = 0;
+    
+    let shift = -1;
+    let game = 1;
+    
+    let ten = 0;
+    let ten2 = 0;
+    
+    let answer = 0;
+    
+    
+    function move(){
+        
+        
+        if(shift == 0){
+            
+            answer = Math.floor(Math.random() * 8)+1;
+            r = Math.floor(Math.random() * 5) + 1;
+            
+            sound_L.src = "sound/BGM"+r+"_L.mp3";
+            sound_R.src = "sound/BGM"+r+"_R.mp3";
+            sound_L.loop = true;
+            sound_R.loop = true;
+            sound_L.volume = 0.7*(( 8 - answer )/9);
+            sound_R.volume = 0.7*(( answer )/9);
+            sound_L.play();
+            sound_R.play();
+            
+            
+            shift = 1;
+            
+        }
+        
+        if(shift == 2){
+            
+            sound_R.pause();
+            
+
+            
+            if(ans == answer){
+                    
+                sound_L.src = "sound/gift.mp3"
+                ten ++;
+                
+            }else if(Math.abs(ans - answer) == 1){
+                    
+                sound_L.src = "sound/OK.mp3"
+                ten2 ++;
+                
+            }else{
+                
+                 sound_L.src = "sound/miss.mp3"
+                
+            }
+            
+            sound_L.volume = 0.8;
+            sound_L.loop = false;
+            sound_L.play();
+            
+            shift = 3;
+            
+        }
+        
+        if(shift >= 3){
+            
+            shift++;
+            
+        }
+        
+        if(shift >= 120){
+            
+
+      
+            if(game>=9){
+            
+                if(shift == 120){
+                            sound_L.src = "sound/end.mp3"
+                   sound_L.volume = 0.5;
+            sound_L.loop = false;
+            sound_L.play();
+   
+                         div_xxxxx.fontSize = 50;
+                         div_xxxxx.innerHTML = "問題数　"+game+"<br>問題正解数　"+ten+"<br>ニアピン数　"+ten2;
+   
+                    
+                }
+                
+        }else{
+            game++;
+            shift = 0;
+            
+        }
+            
+        }
+        
+        
+        
+        
+    }
+    
+let ans;
+           
+     document.onkeydown = key_down;
+ function key_down( e ){
+
+ e.preventDefault( );
+let key = e.keyCode;
+
+     
+ if( key >= 49 && key <= 49+7 ){
+   
+     if(shift == -1){
+         
+         shift = 0;
+         
+     }
+     
+     if(shift == 1){
+         
+         shift = 2;
+         ans = key - 48;
+         
+     }
+     
+     
+ }
+ }
+    
+</script>
